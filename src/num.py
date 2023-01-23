@@ -1,5 +1,8 @@
+import cols
+
 ## Num class Summarizes a stram of numbers
-class Num:
+## Represents a column of character values
+class Num(cols.ColTypeInterface):
     
     ## constructor created for Num class
     def __init__(self, at = 0, txt = ""):
@@ -14,6 +17,12 @@ class Num:
         self.hi = float('-inf')
 
         self.w = -1 if '-$' in txt else 1
+
+    def at(self) -> int:
+        return self.at
+
+    def txt(self) -> str:
+        return self.txt
 
     ## add method adds the n value also,
     ## It upadtes the values of lo,hi d, mu,m2 which is used for,

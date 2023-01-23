@@ -1,7 +1,10 @@
+import cols
+
 import math
 
 ## Summarizes a stream of symbols
-class Sym:
+## Represents a column of character values
+class Sym(cols.ColTypeInterface):
 
     ## Constructs the SYM class
     def __init__(self, at = 0, txt = ""):
@@ -12,6 +15,12 @@ class Sym:
         self.has = {}
         self.most = 0
         self.mode = None
+
+    def at(self) -> int:
+        return self.at
+
+    def txt(self) -> str:
+        return self.txt
 
     ## add function updates the counts for the values that has been seen so far
     ## it doesn't return any value
