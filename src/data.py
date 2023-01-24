@@ -2,39 +2,45 @@ import csv
 import row
 import cols
 
+from typing import List
 
-class data():
+class Data():
 
     ## constructor created for data.py class
-    def __init__(self, i, src, fun):
+    def __init__(self, src):
         self.rows = []
-        self.col = []
+        self.cols =  None
 
         ## if the src is string then
         ## it reads the file and then calls the add method to add each row
-        if str(src) == True :  
-            csvreader = csv.reader(src)
-            for rows in csvreader:
-              self.add(rows);  
-        # else:
-            # do we need this?
-
-    # def map(t, fun, u):
-    #     u ={}
-    #     for k,v in pairs(t):
-            
+        src_type = type(src)
+        if src_type == str :  
+            with open(src, 'r') as csv_file:
+                 reader = csv.reader(csv_file)
+                 for row in reader:
+                    self.add(row)
+        elif src_type == List[str]: # else we were passed the columns as a string
+            self.add(src)
+        else:
+            raise Exception("Unsupported type in Data constructor")
 
     ## add method adds the row read from csv file
     ## It also checks if the col names is being read has already being read or not
     ## if yes then it uses old rows
     ## else add the col rows.
-    def add(self, t):
-        if(self.cols == True):
-            t = t if t == t.cells else row.Row(t) # Can you check one more time unable to understand this
-            self.rows.append(t)
-            self.col.append(self.add(t))
-        else:
-            self.col = cols.Cols(t)
+    def add(self, t: list[str]):
 
-    # def clone(self,init ,d):  I think we don't need this we test case already passed.
-    #     d = data()
+        if(self.cols is None):
+            self.cols = cols.Cols(t)
+        else:
+            row = row.Row(t)
+            self.rows.append(row)
+            self.cols.add(row)
+
+    def clone(self):
+        new_data = Data({self.cols.names})
+        for row in self.rows:
+            new_data.add(row)
+        return new_data
+
+#todo: main method type stuff
