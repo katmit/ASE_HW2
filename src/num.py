@@ -1,8 +1,8 @@
-import cols
+import math
 
 ## Num class Summarizes a stram of numbers
 ## Represents a column of character values
-class Num(cols.ColTypeInterface):
+class Num():
     
     ## constructor created for Num class
     def __init__(self, at = 0, txt = ""):
@@ -27,13 +27,15 @@ class Num(cols.ColTypeInterface):
     ## add method adds the n value also,
     ## It upadtes the values of lo,hi d, mu,m2 which is used for,
     ## calculating standard devaiation. 
-    def add(self, value: float):
-        self.n = self.n + 1
-        d = value - self.mu
-        self.mu = self.mu + (d / self.n)
-        self.m2 = self.m2 + (d * (value - self.mu))
-        self.lo = min(value, self.lo)
-        self.hi = max(value, self.hi)
+    def add(self, value):
+        if value != '?':
+            float_value = float(value)
+            self.n = self.n + 1
+            d = float_value - self.mu
+            self.mu = self.mu + (d / self.n)
+            self.m2 = self.m2 + (d * (float_value - self.mu))
+            self.lo = min(float_value, self.lo)
+            self.hi = max(float_value, self.hi)
 
     ## mid method return the mean. 
     def mid(self):
@@ -45,3 +47,9 @@ class Num(cols.ColTypeInterface):
         if((self.m2 < 0) or (self.n < 2)):
             return 0
         return pow((self.m2 / (self.n - 1)), 0.5)
+
+    def rnd(self, x, n):
+        if x == "?":
+            return x
+        mult = math.pow(10, n)
+        return math.floor(x*mult + 0.5) / mult
