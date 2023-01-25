@@ -1,10 +1,9 @@
-import cols
 
 import math
 
 ## Summarizes a stream of symbols
 ## Represents a column of character values
-class Sym(cols.ColTypeInterface):
+class Sym():
 
     ## Constructs the SYM class
     def __init__(self, at = 0, txt = ""):
@@ -24,16 +23,17 @@ class Sym(cols.ColTypeInterface):
 
     ## add function updates the counts for the values that has been seen so far
     ## it doesn't return any value
-    def add(self, x: chr):
-        self.n = self.n + 1
-        if x in self.has:
-            self.has[x] = self.has[x] + 1
-        else:
-            self.has[x] = 1
-        
-        if self.has[x] > self.most:
-            self.most = self.has[x]
-            self.mode = x
+    def add(self, x):
+        if x != '?':
+            self.n = self.n + 1
+            if x in self.has:
+                self.has[x] = self.has[x] + 1
+            else:
+                self.has[x] = 1
+            
+            if self.has[x] > self.most:
+                self.most = self.has[x]
+                self.mode = x
     
     ## Mid method returns the mode (most frequent)
     def mid(self):
