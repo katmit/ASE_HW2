@@ -5,7 +5,7 @@ import sys
 import traceback
 
 sys.path.append(os.path.abspath('../'))
-from src.data import get_seed, should_dump, get_crashing_behavior_message, get_file
+from src.data import get_seed, should_dump, get_crashing_behavior_message, get_file, get_csv_contents
 from src.data import Data
 from src.num import Num
 from src.sym import Sym
@@ -16,6 +16,10 @@ from src.row import Row
 def round(n, nPlaces = 3):
     mult = math.pow(10, nPlaces)
     return math.floor(n*mult + 0.5) / mult
+
+def test_csv():
+    csv_list = get_csv_contents(get_file())
+    return len(csv_list) == 9
 
 def test_show_dump():
     test_exception = Exception("This is a test exception")
@@ -48,8 +52,37 @@ def test_nums():
 
 def test_data():
     test_data = Data(get_file())
-    #todo implement/debug the rest
+
+    y_mid_report = '{'
+    y_div_report = '{'
+    for y in test_data.cols.y:
+        y_mid_report = y_mid_report + ' :' + y.txt + ' ' + str(y.rnd(y.mid(), 3))
+        y_div_report = y_div_report + ' :' + y.txt + ' ' + str(y.rnd(y.div(), 3))
+    y_mid_report = y_mid_report + '}'
+    y_div_report = y_div_report + '}'
+
+    x_mid_report = '{'
+    x_div_report = '{'
+    for x in test_data.cols.x:
+        x_mid_report = x_mid_report + ' :' + x.txt + ' ' + str(x.rnd(x.mid(), 3))
+        x_div_report = x_div_report + ' :' + x.txt + ' ' + str(x.rnd(x.div(), 3))
+    x_mid_report = x_mid_report + '}'
+    x_div_report = x_div_report + '}'
+
+    print('y\tmid\t' + y_mid_report + '\n \tdiv\t' + y_div_report)
+    print('x\tmid\t' + x_mid_report + '\n \tdiv\t' + x_div_report)
 
     return True
 
-        
+def test_show_dump():
+    test_exception = Exception("This is a test exception")
+    try:
+        raise test_exception
+    except Exception as e:
+        expected_output = str(test_exception)
+        output = get_crashing_behavior_message(test_exception)
+
+        if should_dump():
+            return len(output) > len(expected_output) and expected_output in output
+        else:
+            return expected_output == output

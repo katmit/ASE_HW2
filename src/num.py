@@ -1,3 +1,4 @@
+import math
 
 ## Num class Summarizes a stram of numbers
 ## Represents a column of character values
@@ -46,3 +47,9 @@ class Num():
         if((self.m2 < 0) or (self.n < 2)):
             return 0
         return pow((self.m2 / (self.n - 1)), 0.5)
+
+    def rnd(self, x, n):
+        if x == "?":
+            return x
+        mult = math.pow(10, n)
+        return math.floor(x*mult + 0.5) / mult

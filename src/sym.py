@@ -47,4 +47,7 @@ class Sym():
             e = e + (p * math.log(p, 2))
         return -e
 
+    def rnd(self, x, n):
+        return x
+
 

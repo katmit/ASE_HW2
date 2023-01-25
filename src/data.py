@@ -19,6 +19,19 @@ file = '..\\etc\\data\\auto93.csv'
 seed = 937162211 
 dump = False
 
+def get_csv_contents(filepath: str) -> list[str]:
+    filepath = filepath.replace('/', '\\')
+    #try to catch relative paths
+    if not os.path.isfile(filepath):
+        filepath = os.path.join(script_sir, filepath)
+
+    csv_list = []
+    with open(filepath, 'r') as csv_file:
+        csv_list = list(csv.reader(csv_file, delimiter=','))
+
+    return csv_list
+        
+    
 class Data():
 
     ## constructor created for data.py class
@@ -38,6 +51,7 @@ class Data():
 
             with open(src, 'r') as csv_file:
                  reader = csv.reader(csv_file, delimiter=',')
+                 
                  for row in reader:
                     trimmed_row = []
                     for item in row:
@@ -68,8 +82,7 @@ class Data():
         return new_data
 
     def stats(what, cols, nPlaces):
-        #todo
-        print("todo")
+        print('todo')
 
 
 # ------------------- MAIN PROGRAM FLOW -------------------
@@ -81,7 +94,7 @@ def run_tests():
     
     passCount = 0
     failCount = 0
-    test_suite = [test_show_dump, test_syms, test_nums, test_data]
+    test_suite = [test_csv, test_show_dump, test_syms, test_nums, test_data, test_show_dump]
 
     for test in test_suite:
         if(test()):
