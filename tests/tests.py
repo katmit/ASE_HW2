@@ -56,16 +56,16 @@ def test_data():
     y_mid_report = '{'
     y_div_report = '{'
     for y in test_data.cols.y:
-        y_mid_report = y_mid_report + ' :' + y.txt + ' ' + str(y.rnd(y.mid(), 3))
-        y_div_report = y_div_report + ' :' + y.txt + ' ' + str(y.rnd(y.div(), 3))
+        y_mid_report = y_mid_report + ' :' + y.txt + ' ' + str(y.rnd(y.mid(), 2))
+        y_div_report = y_div_report + ' :' + y.txt + ' ' + str(y.rnd(y.div(), 2))
     y_mid_report = y_mid_report + '}'
     y_div_report = y_div_report + '}'
 
     x_mid_report = '{'
     x_div_report = '{'
     for x in test_data.cols.x:
-        x_mid_report = x_mid_report + ' :' + x.txt + ' ' + str(x.rnd(x.mid(), 3))
-        x_div_report = x_div_report + ' :' + x.txt + ' ' + str(x.rnd(x.div(), 3))
+        x_mid_report = x_mid_report + ' :' + x.txt + ' ' + str(x.rnd(x.mid(), 2))
+        x_div_report = x_div_report + ' :' + x.txt + ' ' + str(x.rnd(x.div(), 2))
     x_mid_report = x_mid_report + '}'
     x_div_report = x_div_report + '}'
 

@@ -10,13 +10,13 @@ from typing import List
 
 script_sir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(script_sir)
-os.sys.path.insert(0,parent_dir) 
+os.sys.path.insert(0,parent_dir)
 from tests.tests import *
 
 # set to their default values
 random_instance = random.Random()
 file = '..\\etc\\data\\auto93.csv'
-seed = 937162211 
+seed = 937162211
 dump = False
 
 def get_csv_contents(filepath: str) -> list[str]:
@@ -30,8 +30,8 @@ def get_csv_contents(filepath: str) -> list[str]:
         csv_list = list(csv.reader(csv_file, delimiter=','))
 
     return csv_list
-        
-    
+
+
 class Data():
 
     ## constructor created for data.py class
@@ -42,21 +42,14 @@ class Data():
         ## if the src is string then
         ## it reads the file and then calls the add method to add each row
         src_type = type(src)
-        if src_type == str : 
+        if src_type == str :
+            csv_list = get_csv_contents(src)
+            for row in csv_list:
+                trimmed_row = []
+                for item in row:
+                    trimmed_row.append(item.strip())
+                self.add(trimmed_row)
 
-            src = src.replace('/', '\\')
-            #try to catch relative paths
-            if not os.path.isfile(src):
-                src = os.path.join(script_sir, src)
-
-            with open(src, 'r') as csv_file:
-                 reader = csv.reader(csv_file, delimiter=',')
-                 
-                 for row in reader:
-                    trimmed_row = []
-                    for item in row:
-                        trimmed_row.append(item.strip())
-                    self.add(trimmed_row)
         elif src_type == List[str]: # else we were passed the columns as a string
             self.add(src)
         else:
@@ -81,8 +74,6 @@ class Data():
             new_data.add(row)
         return new_data
 
-    def stats(what, cols, nPlaces):
-        print('todo')
 
 
 # ------------------- MAIN PROGRAM FLOW -------------------
@@ -91,17 +82,17 @@ class Data():
 ## it displays the names tests passed and failed.
 def run_tests():
     print("Executing tests...\n")
-    
+
     passCount = 0
     failCount = 0
-    test_suite = [test_csv, test_show_dump, test_syms, test_nums, test_data, test_show_dump]
+    test_suite = [test_csv, test_show_dump, test_syms, test_nums, test_data, test_show_dump] 
 
     for test in test_suite:
         if(test()):
             passCount = passCount + 1
         else:
             failCount = failCount + 1
-    
+
     print("Passing: " + str(passCount) + "\nFailing: " + str(failCount))
 
 # uses the value of the dump parameter and passed exception to determine what message to display to the user
@@ -112,7 +103,7 @@ def get_crashing_behavior_message(e: Exception):
         stack = traceback.extract_stack().format()
         for item in stack:
             crash_message = crash_message + item
-            
+
     return crash_message
 
 # api-side function to get the current seed value
@@ -128,7 +119,7 @@ def get_file() -> str:
     return file
 
 ## find_arg_values gets the value of a command line argument
-# first it gets set of args 
+# first it gets set of args
 # second it get option A (-h or -d or -s or -f )
 # third is get option B (--help or --dump or --seed or --file)
 def find_arg_value(args: list[str], optionA: str, optionB: str) -> str:
@@ -170,9 +161,9 @@ if __name__ == "__main__":
                 raise ValueError("Seed value must be an integer!")
         else:
             print("USAGE: Provide an integer value following an -s or --seed argument to set the seed value.\n Example: (-s 3030, --seed 3030)")
-    
+
     # NOTE: the seed will be set in main, the rest of the application need not set it
-    random_instance.seed(seed)    
+    random_instance.seed(seed)
     if '-g' in args or '--go' in args:
         run_tests()
     # except Exception as e:

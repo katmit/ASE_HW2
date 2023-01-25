@@ -15,14 +15,15 @@ class Cols:
         self.y = []
 
         for n, s in enumerate(t):
-            col = Num(n, s) if re.search("^[A-Z]+", s) != None else Sym(n, s)
-            self.all.append(col)
-            if re.search("X$", s) is None:
+            if(s[-1].lower() != 'x'):
+                col = Num(n, s) if re.search("^[A-Z]+", s) != None else Sym(n, s)
+                self.all.append(col)
+                if re.search("X$", s) is None:
 
-                if(re.search("[!+-]$", s)):
-                    self.y.append(col)
-                else:
-                    self.x.append(col)
+                    if(re.search("[!+-]$", s)):
+                        self.y.append(col)
+                    else:
+                        self.x.append(col)
                 
     def add(self, row: row.Row):
         for col in self.all:
