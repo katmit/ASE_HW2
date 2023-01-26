@@ -25,7 +25,7 @@ class Cols:
                     else:
                         self.x.append(col)
                 
-    def add(self, row: row.Row):
+    def add(self, row: row.Rows):
         for col in self.all:
             col.add(row.cells[col.at])
 

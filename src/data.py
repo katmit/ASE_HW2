@@ -1,6 +1,6 @@
 import csv
 import random
-import row
+from row import Rows
 import sys
 import os
 import cols
@@ -8,9 +8,9 @@ import data
 
 from typing import List
 
-script_sir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(script_sir)
-os.sys.path.insert(0,parent_dir)
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# parent_dir = os.path.dirname(script_sir)
+os.sys.path.insert(0,parentdir)
 from tests.tests import *
 
 # set to their default values
@@ -23,7 +23,7 @@ def get_csv_contents(filepath: str) -> list[str]:
     filepath = filepath.replace('/', '\\')
     #try to catch relative paths
     if not os.path.isfile(filepath):
-        filepath = os.path.join(script_sir, filepath)
+        filepath = os.path.join(parentdir, filepath)
 
     csv_list = []
     with open(filepath, 'r') as csv_file:
@@ -141,7 +141,7 @@ OPTIONS:
 
 if __name__ == "__main__":
     args = sys.argv
-    print(args[2])
+    # print(args[2])
     #try:
     if '-h' in args or '--help' in args:
         print(help_string)

@@ -10,7 +10,7 @@ from src.data import Data
 from src.num import Num
 from src.sym import Sym
 from src.cols import Cols
-from src.row import Row 
+from src.row import Rows
 
 
 def round(n, nPlaces = 3):
@@ -51,7 +51,7 @@ def test_nums():
     return ((11/ 7) == num.mid()) and (0.787 == round(num.div()))
 
 def test_data():
-    test_data = Data(get_file())
+    test_data = data(get_file())
 
     y_mid_report = '{'
     y_div_report = '{'
