@@ -4,22 +4,20 @@ import os
 import sys
 import traceback
 
-sys.path.append(os.path.abspath('../'))
-from src.data import get_seed, should_dump, get_crashing_behavior_message, get_file, get_csv_contents
-from src.data import Data
+sys.path.append(os.path.abspath('../src'))
+
+from src.cols import Cols
 from src.num import Num
 from src.sym import Sym
-from src.cols import Cols
-from src.row import Rows
+from src.data import should_dump, get_crashing_behavior_message, get_file, get_csv_contents, Data
 
-
-def round(n, nPlaces = 3):
+def round_to(n, nPlaces = 3):
     mult = math.pow(10, nPlaces)
     return math.floor(n*mult + 0.5) / mult
 
 def test_csv():
     csv_list = get_csv_contents(get_file())
-    return len(csv_list) == 9
+    assert len(csv_list) == 399
 
 def test_show_dump():
     test_exception = Exception("This is a test exception")
@@ -30,9 +28,9 @@ def test_show_dump():
         output = get_crashing_behavior_message(test_exception)
 
         if should_dump():
-            return len(output) > len(expected_output) and expected_output in output
+            assert len(output) > len(expected_output) and expected_output in output
         else:
-            return expected_output == output
+            assert expected_output == output
 
 def test_syms():
     sym = Sym()
@@ -40,7 +38,7 @@ def test_syms():
     for value in values:
         sym.add(value)
 
-    return ('a' == sym.mid()) and (1.379 == round(sym.div()))
+    assert ('a' == sym.mid()) and (1.379 == round_to(sym.div(), 3))
 
 def test_nums():
     num = Num()
@@ -48,10 +46,10 @@ def test_nums():
     for value in values:
         num.add(value)
     
-    return ((11/ 7) == num.mid()) and (0.787 == round(num.div()))
+    assert ((11/ 7) == num.mid()) and (0.787 == round_to(num.div(), 3))
 
 def test_data():
-    test_data = data(get_file())
+    test_data = Data(get_file())
 
     y_mid_report = '{'
     y_div_report = '{'
@@ -72,7 +70,7 @@ def test_data():
     print('y\tmid\t' + y_mid_report + '\n \tdiv\t' + y_div_report)
     print('x\tmid\t' + x_mid_report + '\n \tdiv\t' + x_div_report)
 
-    return True
+    assert True
 
 def test_show_dump():
     test_exception = Exception("This is a test exception")
@@ -83,6 +81,6 @@ def test_show_dump():
         output = get_crashing_behavior_message(test_exception)
 
         if should_dump():
-            return len(output) > len(expected_output) and expected_output in output
+            assert len(output) > len(expected_output) and expected_output in output
         else:
-            return expected_output == output
+            assert expected_output == output
