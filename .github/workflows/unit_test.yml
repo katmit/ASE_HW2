@@ -25,4 +25,4 @@ jobs:
           cd tests
           pip install pytest
           pip install pytest-cov
-          pytest tests.py 
+          pytest tests.py
