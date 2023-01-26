@@ -93,10 +93,8 @@ def run_tests():
     for test in test_suite:
         try:
             test()
-            print(test.__name__ + ": PASSED")
             passCount = passCount + 1
         except AssertionError as e:
-            print(test.__name__ + ": FAILED")
             failCount = failCount + 1
         
 
@@ -148,30 +146,29 @@ OPTIONS:
 
 if __name__ == "__main__":
     args = sys.argv
-    # print(args[2])
-    #try:
-    if '-h' in args or '--help' in args:
-        print(help_string)
+    try:
+        if '-h' in args or '--help' in args:
+            print(help_string)
 
-    if '-d' in args or '--dump' in args:
-        dump = True
+        if '-d' in args or '--dump' in args:
+            dump = True
 
-    if '-f' in args or '--file' in args:
-        file = data.data(find_arg_value(args, '-f', '--file'))
+        if '-f' in args or '--file' in args:
+            file = data.data(find_arg_value(args, '-f', '--file'))
 
-    if '-s' in args or '--seed' in args:
-        seed_value = find_arg_value(args, '-s', '--seed')
-        if seed_value is not None:
-            try:
-                seed = int(seed_value)
-            except ValueError:
-                raise ValueError("Seed value must be an integer!")
-        else:
-            print("USAGE: Provide an integer value following an -s or --seed argument to set the seed value.\n Example: (-s 3030, --seed 3030)")
+        if '-s' in args or '--seed' in args:
+            seed_value = find_arg_value(args, '-s', '--seed')
+            if seed_value is not None:
+                try:
+                    seed = int(seed_value)
+                except ValueError:
+                    raise ValueError("Seed value must be an integer!")
+            else:
+                print("USAGE: Provide an integer value following an -s or --seed argument to set the seed value.\n Example: (-s 3030, --seed 3030)")
 
-    # NOTE: the seed will be set in main, the rest of the application need not set it
-    random_instance.seed(seed)
-    if '-g' in args or '--go' in args:
-        run_tests()
-    # except Exception as e:
-    #     print(get_crashing_behavior_message(e))
+        # NOTE: the seed will be set in main, the rest of the application need not set it
+        random_instance.seed(seed)
+        if '-g' in args or '--go' in args:
+            run_tests()
+    except Exception as e:
+        print(get_crashing_behavior_message(e))
