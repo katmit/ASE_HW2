@@ -1,12 +1,13 @@
-import csv
-import random
-import row
-import sys
-import os
-import cols
-import data
 
 from typing import List
+
+import os
+import csv
+import random
+import cols
+import row
+import sys
+import data
 
 script_sir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(script_sir)
@@ -15,15 +16,17 @@ from tests.tests import *
 
 # set to their default values
 random_instance = random.Random()
-file = '..\\etc\\data\\auto93.csv'
+file = '../etc/data/auto93.csv'
 seed = 937162211
 dump = False
 
 def get_csv_contents(filepath: str) -> list[str]:
-    filepath = filepath.replace('/', '\\')
+
     #try to catch relative paths
     if not os.path.isfile(filepath):
         filepath = os.path.join(script_sir, filepath)
+
+    filepath = os.path.abspath(filepath)
 
     csv_list = []
     with open(filepath, 'r') as csv_file:
@@ -88,12 +91,14 @@ def run_tests():
     test_suite = [test_csv, test_show_dump, test_syms, test_nums, test_data, test_show_dump] 
 
     for test in test_suite:
-        if(test()):
-            print(test.__name__ + ": PASS")
+        try:
+            test()
+            print(test.__name__ + ": PASSED")
             passCount = passCount + 1
-        else:
-            print(test.__name__ + ": FAIL")
+        except AssertionError as e:
+            print(test.__name__ + ": FAILED")
             failCount = failCount + 1
+        
 
     print("\nPassing: " + str(passCount) + "\nFailing: " + str(failCount))
 
