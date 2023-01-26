@@ -6,11 +6,11 @@ import traceback
 
 sys.path.append(os.path.abspath('../'))
 from src.data import get_seed, should_dump, get_crashing_behavior_message, get_file, get_csv_contents
+from src.row import Rows
 from src.data import Data
 from src.num import Num
 from src.sym import Sym
 from src.cols import Cols
-from src.row import Rows
 
 
 def round(n, nPlaces = 3):
@@ -19,7 +19,7 @@ def round(n, nPlaces = 3):
 
 def test_csv():
     csv_list = get_csv_contents(get_file())
-    return len(csv_list) == 9
+    return len(csv_list) == 399
 
 def test_show_dump():
     test_exception = Exception("This is a test exception")
@@ -51,7 +51,7 @@ def test_nums():
     return ((11/ 7) == num.mid()) and (0.787 == round(num.div()))
 
 def test_data():
-    test_data = data(get_file())
+    test_data = Data(get_file())
 
     y_mid_report = '{'
     y_div_report = '{'
