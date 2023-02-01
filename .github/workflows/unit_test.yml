@@ -1,5 +1,6 @@
 name: Run Tests On Push
 on:
+  [workflow_dispatch]
   push:
     branches:
       - main
