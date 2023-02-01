@@ -4,6 +4,7 @@ import os
 import sys
 import traceback
 
+
 sys.path.append(os.path.abspath('../src'))
 
 from src.cols import Cols
@@ -16,7 +17,7 @@ def round_to(n, nPlaces = 3):
     return math.floor(n*mult + 0.5) / mult
 
 def print_res(function_name: str, res: bool):
-    print("\n" + function_name + (": PASSED" if res else ": FAILED"))
+    print("\n" + function_name + (": PASS" if res else ": FAIL"))
 
 def test_csv():
     csv_list = get_csv_contents(get_file())
