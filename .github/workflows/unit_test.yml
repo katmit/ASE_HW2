@@ -1,6 +1,5 @@
 name: Run Tests On Push
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -26,6 +25,4 @@ jobs:
           cd tests
           pip install pytest
           pip install pytest-cov
-          pytest tests.py > ../etc/out/test.out
-          cd ../src/
-          python data.py -h -g > ../etc/out/data.out
+          pytest tests.py
